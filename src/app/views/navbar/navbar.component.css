@@ -1,11 +1,12 @@
 .custom-navbar {
-  position: fixed;
-  top: 0;
-  left: 250px;
-  right: 0;
   background-color: #212529;
-  z-index: 900;
   padding: 10px 20px;
+}
+
+.container-fluid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .center-search {
@@ -14,11 +15,48 @@
   justify-content: center;
 }
 
-.center-search form {
+.center-search .form-control {
   max-width: 300px;
-  width: 100%;
+}
+
+.btn-outline-success {
+  color: #28a745;
+  border-color: #28a745;
 }
 
 .dropdown {
-  margin-left: auto; 
+  position: relative;
+}
+
+.btn-secondary {
+  color: #28a745;
+  border-color: #28a745;
+  background-color: #212529;
+}
+
+
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-menu {
+  right: 0;
+  left: auto;
+  margin-top: 5px;
+  min-width: 150px;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  cursor: pointer;
+  color: #212529;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: #16181b;
 }

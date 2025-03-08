@@ -6,17 +6,20 @@ body {
 .form-signin {
   max-width: 330px;
   padding: 1rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   text-align:  center;
 }
 
 .form-signin .form-floating:focus-within {
   z-index: 2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .form-signin input[type="email"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
+
 }
 
 .form-signin input[type="password"] {

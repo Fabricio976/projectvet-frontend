@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -9,21 +9,30 @@ import { catchError, tap } from 'rxjs/operators';
 export class AuthService {
   private apiUrl = 'http://localhost:8080/projectvet';
   private tokenKey = 'auth_token';
-  private userNameKey = 'user_name';
+  private userName: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  private userNameSubject = new BehaviorSubject<string | null>(
+    this.getUserName()
+  );
+  userName$ = this.userNameSubject.asObservable();
+  constructor(private http: HttpClient) {
+    this.userName = localStorage.getItem('userName');
+  }
 
   login(email: string, password: string): Observable<any> {
-    const credentials = { email, password };
-    return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
+    return this.http.post(`${this.apiUrl}/login`, { email, password }).pipe(
       tap((response: any) => {
-        if (response && response.token) {
-          localStorage.setItem(this.tokenKey, response.token);
+        const token = response.token;
+        const userName = response.userNome;
+
+        if (token) {
+          localStorage.setItem('token', token);
+          localStorage.setItem('userName', userName || '');
+          this.userName = userName;
+        } else {
+          console.error('Token não encontrado no response:', response);
+          throw new Error('Resposta da API inválida');
         }
-      }),
-      catchError((error) => {
-        console.error('Erro no login:', error);
-        throw error;
       })
     );
   }
@@ -37,7 +46,6 @@ export class AuthService {
     phone: string;
   }): Observable<any> {
     return this.http.post(`${this.apiUrl}/register/funcionario`, userData).pipe(
-      tap((response) => console.log('Resposta:', response)),
       catchError((error) => {
         console.error('Erro no registro:', error);
         throw error;
@@ -47,46 +55,52 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey); //recupera o token
+
   }
 
   logout(): void {
     localStorage.removeItem(this.tokenKey); // remove o token ao deslogar
-    localStorage.removeItem(this.userNameKey); // remove o nome ao deslogar
+    this.userName = null; // remove o nome ao deslogar
   }
 
   getUserName(): string | null {
-    return localStorage.getItem(this.userNameKey); // recupera o nome para nav-bar
+    return this.userName || localStorage.getItem('userName'); // recupera o nome para navbar
   }
 
   isLoggedIn(): boolean {
-    return !!this.getToken(); //verifica se há token
+    const token = localStorage.getItem('token');
+    return !!token;
   }
-
   forgotPassword(email: string): Observable<any> {
     const userData = { email };
     return this.http.post(`${this.apiUrl}/code-forgot`, userData).pipe(
-      tap(response => console.log('Código enviado:', response)),
-      catchError(error => {
+      catchError((error) => {
         console.error('Erro ao enviar código:', error);
         throw error;
       })
     );
   }
 
-resetPassword(email: string, code: string, newPassword: string): Observable<any> {
-  const userData = { email, codeRecoveryPassword: code, password: newPassword };
-  return this.http.post(`${this.apiUrl}/change-password`, userData).pipe(
-    tap(response => console.log('Resposta do servidor:', response)),
-    catchError(error => {
-      console.error('Erro ao redefinir senha:', error);
-      throw error;
-    })
-  );
-}
+  resetPassword(
+    email: string,
+    code: string,
+    newPassword: string
+  ): Observable<any> {
+    const userData = {
+      email,
+      codeRecoveryPassword: code,
+      password: newPassword,
+    };
+    return this.http.post(`${this.apiUrl}/change-password`, userData).pipe(
+      catchError((error) => {
+        console.error('Erro ao redefinir senha:', error);
+        throw error;
+      })
+    );
+  }
   verifyCode(email: string, code: string): Observable<any> {
     const data = { email, codeRecoveryPassword: code };
     return this.http.post(`${this.apiUrl}/verify-code`, data).pipe(
-      tap((response) => console.log('Resposta:', response)),
       catchError((error) => {
         console.error('Erro ao verificar código:', error);
         throw error;

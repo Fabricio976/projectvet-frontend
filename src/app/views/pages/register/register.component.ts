@@ -46,11 +46,10 @@ export class RegisterComponent implements OnInit {
         phone
       };
       this.authService.register(formData).subscribe({
-        next: (response) => {
-
+        next: () => {
           this.router.navigate(['/login']);
         },
-        error: (err) => {
+        error: () => {
           alert('Falha no registro. Verifique os dados e tente novamente.');
         }
       });

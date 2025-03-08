@@ -1,9 +1,9 @@
 .list-group-item {
-  cursor: pointer; /* Indicates clickability */
+  cursor: pointer;
 }
 
 .list-group-item:hover {
-  background-color: #f8f9fa; /* Light gray hover effect */
+  background-color: #f8f9fa;
 }
 
 .d-flex {
@@ -11,6 +11,6 @@
 }
 
 .d-flex span {
-  flex: 1; /* Equal width for each column */
-  text-align: center; /* Center text in each "column" */
+  flex: 1;
+  text-align: center;
 }

@@ -8,12 +8,16 @@ import { AuthService } from '../../service/auth.service';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
   isDropdownOpen = false;
 
-  constructor(private router: Router, private elementRef: ElementRef, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private elementRef: ElementRef,
+    private authService: AuthService
+  ) {}
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
@@ -23,30 +27,22 @@ export class NavbarComponent {
     this.isDropdownOpen = false;
   }
 
-  navigateToHome(){
-    this.router.navigate(['/home'])
-  }
-
-  navigateToProfile(): void {
-    this.router.navigate(['/profile-animal']);
-    this.isDropdownOpen = false;
-  }
-
   navigateToLogin() {
     this.closeDropdown();
     this.router.navigate(['/login']);
   }
+
   navigateToRegister() {
     this.closeDropdown();
     this.router.navigate(['/register']);
   }
 
-  navigateToRegisterAnimal(): void {
-    this.router.navigate(['/registrar-animals']);
-    this.isDropdownOpen = false;
+  navigateToRegisterAnimal() {
+    this.router.navigate(['/register-animals']);
+    this.closeDropdown();
   }
 
-  logout(): void {
+  logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
     this.isDropdownOpen = false;
@@ -59,6 +55,13 @@ export class NavbarComponent {
   getUserName(): string | null {
     return this.authService.getUserName();
   }
+  getFirstName(): string | null {
+    const fullName = this.getUserName();
+    if (fullName) {
+      return fullName.split(' ')[0];
+    }
+    return null;
+  }
 
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
@@ -66,6 +69,4 @@ export class NavbarComponent {
       this.closeDropdown();
     }
   }
-
-
 }
