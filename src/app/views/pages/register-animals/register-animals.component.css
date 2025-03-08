@@ -1,0 +1,16 @@
+body {
+  height: 100%;
+}
+
+.form-signin {
+  max-width: 500px;
+  text-align: center;
+  padding: 15px;
+}
+
+.form-signin .form-control {
+  margin-bottom: 0;
+}
+.form-floating {
+  position: relative;
+}

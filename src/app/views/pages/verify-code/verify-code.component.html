@@ -1,0 +1,45 @@
+<main class="form-signin w-100 m-auto">
+  <form [formGroup]="verifyForm" (ngSubmit)="onSubmit()">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="60"
+      height="60"
+      fill="currentColor"
+      class="bi bi-key"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647A.5.5 0 0 1 12 10h-1v1a.5.5 0 0 1-.5.5h-1v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V11a.5.5 0 0 1 .5-.5h1V10a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .354-.146l.853-.853A4 4 0 0 1 0 8zm8-3a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"
+      />
+    </svg>
+    <h1 class="h3 mb-3 fw-normal">Verificar Código</h1>
+
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        id="floatingCode"
+        placeholder="Código"
+        formControlName="code"
+        [ngClass]="{'is-invalid': verifyForm.get('code')?.touched && verifyForm.get('code')?.invalid}"
+      />
+      <label for="floatingCode">Código enviado ao email</label>
+      <div class="invalid-feedback" *ngIf="verifyForm.get('code')?.touched && verifyForm.get('code')?.hasError('required')">
+        Código é obrigatório.
+      </div>
+    </div>
+
+    <div class="text-start my-3">
+      <a href="/forgot-password" class="text-primary">Não recebi o email</a>
+    </div>
+
+    <button
+      class="btn btn-primary w-100 py-2"
+      type="submit"
+      [disabled]="verifyForm.invalid"
+    >
+      Verificar
+    </button>
+    <p class="mt-5 mb-3 text-body-secondary">Projeto Vet – 2025</p>
+  </form>
+</main>

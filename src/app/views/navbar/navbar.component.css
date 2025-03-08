@@ -1,0 +1,24 @@
+.custom-navbar {
+  position: fixed;
+  top: 0;
+  left: 250px;
+  right: 0;
+  background-color: #212529;
+  z-index: 900;
+  padding: 10px 20px;
+}
+
+.center-search {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.center-search form {
+  max-width: 300px;
+  width: 100%;
+}
+
+.dropdown {
+  margin-left: auto; 
+}

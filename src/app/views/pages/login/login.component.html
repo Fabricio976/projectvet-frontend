@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<body class="d-flex align-items-center py-4 bg-body-tertiary">
+  <main class="form-signin w-100 m-auto">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="60"
+        height="60"
+        fill="currentColor"
+        class="bi bi-box-arrow-right"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"
+        />
+        <path
+          fill-rule="evenodd"
+          d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"
+        />
+      </svg>
+      <h1 class="h3 mb-3 fw-normal">Sign in</h1>
+
+      <div class="form-floating">
+        <input
+          type="email"
+          class="form-control"
+          id="floatingInput"
+          placeholder="name@example.com"
+          formControlName="email"
+        />
+        <label for="floatingInput">Email</label>
+      </div>
+      <div class="form-floating">
+        <input
+          type="password"
+          class="form-control"
+          id="floatingPassword"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <label for="floatingPassword">Senha</label>
+      </div>
+
+      <div class="d-flex justify-content-between my-3">
+        <a href= "/forgot-password" class="text-primary">Esqueci a senha</a>
+        <a href= "/register" class="text-primary">Não possuo conta</a>
+      </div>
+      <button
+        class="btn btn-primary w-100 py-2"
+        type="submit"
+        [disabled]="loginForm.invalid"
+      >
+        Entrar
+      </button>
+      <p class="mt-5 mb-3 text-body-secondary">Projeto Vet – 2025</p>
+    </form>
+  </main>
+  <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+</body>

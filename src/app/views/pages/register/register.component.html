@@ -1,0 +1,140 @@
+<main class="form-signin w-100 m-auto">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="60"
+      height="60"
+      fill="currentColor"
+      class="bi bi-person"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"
+      />
+    </svg>
+    <h1 class="h3 mb-3 fw-normal">Sign up</h1>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInputFirstName"
+              placeholder="PrimeiroNome"
+              formControlName="firstName"
+              [ngClass]="{'is-invalid': registerForm.get('firstName')?.touched && registerForm.get('firstName')?.invalid}"
+            />
+            <label for="floatingInputFirstName">Primeiro Nome</label>
+            <div class="invalid-feedback" *ngIf="registerForm.get('firstName')?.touched && registerForm.get('firstName')?.hasError('required')">
+              Primeiro nome é obrigatório.
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInputLastName"
+              placeholder="Sobrenome"
+              formControlName="lastName"
+              [ngClass]="{'is-invalid': registerForm.get('lastName')?.touched && registerForm.get('lastName')?.invalid}"
+            />
+            <label for="floatingInputLastName">Sobrenome</label>
+            <div class="invalid-feedback" *ngIf="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.hasError('required')">
+              Sobrenome é obrigatório.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-floating mb-3">
+        <input
+          type="email"
+          class="form-control"
+          id="floatingInput"
+          placeholder="name@example.com"
+          formControlName="email"
+          [ngClass]="{'is-invalid': registerForm.get('email')?.touched && registerForm.get('email')?.invalid}"
+        />
+        <label for="floatingInput">Email</label>
+        <div class="invalid-feedback" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('required')">
+          Email é obrigatório.
+        </div>
+        <div class="invalid-feedback" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('email')">
+          Insira um email válido.
+        </div>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input
+          type="password"
+          class="form-control"
+          id="floatingPassword"
+          placeholder="Password"
+          formControlName="password"
+          [ngClass]="{'is-invalid': registerForm.get('password')?.touched && registerForm.get('password')?.invalid}"
+        />
+        <label for="floatingPassword">Senha</label>
+        <div class="invalid-feedback" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('required')">
+          Senha é obrigatória.
+        </div>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="floatingCPF"
+          placeholder="CPF"
+          formControlName="cpf"
+          [ngClass]="{'is-invalid': registerForm.get('cpf')?.touched && registerForm.get('cpf')?.invalid}"
+        />
+        <label for="floatingCPF">CPF</label>
+        <div class="invalid-feedback" *ngIf="registerForm.get('cpf')?.touched && registerForm.get('cpf')?.hasError('required')">
+          CPF é obrigatório.
+        </div>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="floatingAddress"
+          placeholder="Endereço"
+          formControlName="address"
+          [ngClass]="{'is-invalid': registerForm.get('address')?.touched && registerForm.get('address')?.invalid}"
+        />
+        <label for="floatingAddress">Endereço</label>
+        <div class="invalid-feedback" *ngIf="registerForm.get('address')?.touched && registerForm.get('address')?.hasError('required')">
+          Endereço é obrigatório.
+        </div>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input
+          type="tel"
+          class="form-control"
+          id="floatingPhone"
+          placeholder="Telefone"
+          formControlName="phone"
+          [ngClass]="{'is-invalid': registerForm.get('phone')?.touched && registerForm.get('phone')?.invalid}"
+        />
+        <label for="floatingPhone">Telefone</label>
+        <div class="invalid-feedback" *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.hasError('required')">
+          Telefone é obrigatório.
+        </div>
+      </div>
+    </div>
+
+    <button
+      class="btn btn-primary w-100 py-2"
+      type="submit"
+      [disabled]="registerForm.invalid"
+    >
+      Cadastrar
+    </button>
+    <p class="mt-5 mb-3 text-body-secondary">Projeto Vet – 2025</p>
+  </form>
+</main>
