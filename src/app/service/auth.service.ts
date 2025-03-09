@@ -8,13 +8,12 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8080/projectvet';
-  private tokenKey = 'auth_token';
+  private tokenKey = 'token';
   private userName: string | null = null;
 
-  private userNameSubject = new BehaviorSubject<string | null>(
-    this.getUserName()
-  );
+  private userNameSubject = new BehaviorSubject<string | null>(this.getUserName());
   userName$ = this.userNameSubject.asObservable();
+
   constructor(private http: HttpClient) {
     this.userName = localStorage.getItem('userName');
   }
@@ -26,9 +25,10 @@ export class AuthService {
         const userName = response.userNome;
 
         if (token) {
-          localStorage.setItem('token', token);
+          localStorage.setItem(this.tokenKey, token);
           localStorage.setItem('userName', userName || '');
           this.userName = userName;
+          this.userNameSubject.next(userName); 
         } else {
           console.error('Token não encontrado no response:', response);
           throw new Error('Resposta da API inválida');
@@ -54,23 +54,25 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem(this.tokenKey); //recupera o token
-
+    return localStorage.getItem(this.tokenKey);
   }
 
   logout(): void {
-    localStorage.removeItem(this.tokenKey); // remove o token ao deslogar
-    this.userName = null; // remove o nome ao deslogar
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem('userName');
+    this.userName = null;
+    this.userNameSubject.next(null);
   }
 
   getUserName(): string | null {
-    return this.userName || localStorage.getItem('userName'); // recupera o nome para navbar
+    return this.userName || localStorage.getItem('userName');
   }
 
   isLoggedIn(): boolean {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem(this.tokenKey);
     return !!token;
   }
+
   forgotPassword(email: string): Observable<any> {
     const userData = { email };
     return this.http.post(`${this.apiUrl}/code-forgot`, userData).pipe(
@@ -81,16 +83,8 @@ export class AuthService {
     );
   }
 
-  resetPassword(
-    email: string,
-    code: string,
-    newPassword: string
-  ): Observable<any> {
-    const userData = {
-      email,
-      codeRecoveryPassword: code,
-      password: newPassword,
-    };
+  resetPassword(email: string, code: string, newPassword: string): Observable<any> {
+    const userData = { email, codeRecoveryPassword: code, password: newPassword };
     return this.http.post(`${this.apiUrl}/change-password`, userData).pipe(
       catchError((error) => {
         console.error('Erro ao redefinir senha:', error);
@@ -98,6 +92,7 @@ export class AuthService {
       })
     );
   }
+
   verifyCode(email: string, code: string): Observable<any> {
     const data = { email, codeRecoveryPassword: code };
     return this.http.post(`${this.apiUrl}/verify-code`, data).pipe(

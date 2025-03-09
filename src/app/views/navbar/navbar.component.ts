@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+
 import { AuthService } from '../../service/auth.service';
 
 @Component({
@@ -55,6 +56,7 @@ export class NavbarComponent {
   getUserName(): string | null {
     return this.authService.getUserName();
   }
+
   getFirstName(): string | null {
     const fullName = this.getUserName();
     if (fullName) {

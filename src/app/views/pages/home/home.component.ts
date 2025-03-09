@@ -1,28 +1,54 @@
-import { routes } from './../../../app.routes';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
+
+import { AuthService } from '../../../service/auth.service';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  animals: any[] = [];
+  private apiUrl = 'http://localhost:8080/projectvet';
 
-  constructor(private router: Router){
-  }
-  appointments = [
-    { user: 'João Silva', animal: 'Rex', date: new Date('2025-03-01'), animalId: 1 },
-    { user: 'Maria Oliveira', animal: 'Luna', date: new Date('2025-03-02'), animalId: 2 },
-    { user: 'Pedro Santos', animal: 'Max', date: new Date('2025-03-03'), animalId: 3 }
-  ]; // Sample data, replace with actual service call
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-  navigateToProfile(){
-    this.router.navigate(['/profile-animal'])
+  ngOnInit(): void {
+    const token = localStorage.getItem('token');
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    this.loadAnimals(token);
   }
-  ngOnInit() {
-    // Fetch data from a service here if needed
+
+  loadAnimals(token: string | null): void {
+    this.http
+      .get(`${this.apiUrl}/animal/searchAll`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .subscribe({
+        next: (response: any) => {
+          this.animals = response;
+        },
+        error: (error) => {
+          console.error('Erro ao carregar animais:', error);
+          alert('Erro ao carregar a lista de animais.');
+        }
+      });
+  }
+
+  navigateToProfile(animalId: string): void {
+    this.router.navigate(['/profile-animal', animalId]);
   }
 }

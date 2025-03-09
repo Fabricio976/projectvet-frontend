@@ -7,6 +7,7 @@ import { ProfileComponent } from './views/pages/profile/profile.component';
 import { ForgotPasswordComponent } from './views/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './views/pages/reset-password/reset-password.component';
 import { VerifyCodeComponent } from './views/pages/verify-code/verify-code.component';
+import { AuthGuard } from './service/auth.guard';
 
 export const routes: Routes = [
   {
@@ -29,14 +30,17 @@ export const routes: Routes = [
   {
     path: 'register-animals',
     component: RegisterAnimalsComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path: `profile-animal`,
+    path: `profile-animal/:id`,
     component: ProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'forgot-password',
-    component: ForgotPasswordComponent
+    component: ForgotPasswordComponent,
+
   },
   {
     path: 'verify-code',

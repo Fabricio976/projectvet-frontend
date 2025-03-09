@@ -3,25 +3,27 @@
     <div class="col">
       <div class="card">
         <div class="card-header">
-          <h5 class="mb-2">Lista de Atendimentos</h5>
+          <h5 class="mb-2">Lista de Animais Cadastrados</h5>
           <div class="d-flex justify-content-between header-labels">
             <span>Responsável</span>
-            <span>Animal</span>
-            <span>Data de Atendimento</span>
+            <span>Nome</span>
+            <span>Espécie</span>
+            <span>Data de Cadastro</span>
           </div>
         </div>
         <div class="card-body">
           <ul class="list-group list-group-flush">
             <li
-              *ngFor="let appointment of appointments"
+              *ngFor="let animal of animals"
               class="list-group-item list-group-item-action"
-              (click)="navigateToProfile()"
-              [routerLink]="['/animal-profile', appointment.animalId]"
+              (click)="navigateToProfile(animal.id)"
+              [routerLink]="['/profile-animal', animal.id]"
             >
               <div class="d-flex justify-content-between">
-                <span>{{ appointment.user }}</span>
-                <span>{{ appointment.animal }}</span>
-                <span>{{ appointment.date | date: 'dd/MM/yyyy' }}</span>
+                <span>{{ animal.responsible.nome }}</span>
+                <span>{{ animal.name }}</span>
+                <span>{{ animal.specie }}</span>
+                <span>{{ animal.dateRegister | date: 'dd/MM/yyyy' }}</span>
               </div>
             </li>
           </ul>
