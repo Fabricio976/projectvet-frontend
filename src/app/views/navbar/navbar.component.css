@@ -1,6 +1,23 @@
 .custom-navbar {
   background-color: #212529;
   padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.sidebar .logo {
+  padding: 20px 20px 10px 20px;
+  text-align: center;
+  border-bottom: 1px solid #ced4da;
+}
+
+.logo h4 {
+  margin: 0;
+  color: #fff;
+  font-weight: bold;
 }
 
 .container-fluid {

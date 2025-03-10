@@ -122,9 +122,9 @@
           }"
         >
         <option value="">Selecione um serviço</option>
-        <option value="Petshop">Petshop</option>
-        <option value="Clínica Veterinária">Clínica Veterinária</option>
-        <option value="Clínica e Petshop">Clínica e Petshop</option>
+        <option *ngFor="let option of servicePetOptions" [value]="option.value">
+          {{ option.label }}
+        </option>
         </select>
         <label for="floatingInputService">Serviço</label>
         <div class="invalid-feedback">Serviço é obrigatório.</div>

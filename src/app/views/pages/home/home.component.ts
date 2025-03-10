@@ -15,6 +15,7 @@ import { AuthService } from '../../../service/auth.service';
 })
 export class HomeComponent implements OnInit {
   animals: any[] = [];
+  userRole: string | null = null;
   private apiUrl = 'http://localhost:8080/projectvet';
 
   constructor(
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
+    this.userRole = this.authService.getUserRole();
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
       return;

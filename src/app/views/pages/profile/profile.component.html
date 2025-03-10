@@ -1,5 +1,5 @@
 <div class="container mt-4" *ngIf="animal">
-  <h2>Perfil do Animal</h2>
+  <h2>Ficha do Animal</h2>
   <div class="card">
     <div class="card-body">
       <h5 class="card-title">{{ animal.name }}</h5>
@@ -7,7 +7,8 @@
       <p class="card-text"><strong>Espécie:</strong> {{ animal.specie }}</p>
       <p class="card-text"><strong>Raça:</strong> {{ animal.race || 'Não especificada' }}</p>
       <p class="card-text"><strong>Idade:</strong> {{ animal.age || 'Não especificada' }}</p>
-      <p class="card-text"><strong>Data de Cadastro:</strong> {{ animal.dateRegister | date: 'dd/MM/yyyy' }}</p>
+      <p class="card-text"><strong>Idade:</strong> {{ animal.servicePet || 'Não especificada' }}</p>
+      <p class="card-text"><strong>Data de Registro:</strong> {{ animal.dateRegister | date: 'dd/MM/yyyy' }}</p>
     </div>
   </div>
 </div>

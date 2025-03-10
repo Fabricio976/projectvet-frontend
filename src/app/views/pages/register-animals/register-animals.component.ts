@@ -18,6 +18,12 @@ export class RegisterAnimalsComponent implements OnInit {
   animalForm: FormGroup;
   private apiUrl = 'http://localhost:8080/projectvet';
 
+  servicePetOptions = [
+    { value: 'Pet Shop', label: 'Pet Shop' },
+    { value: 'Clínica Veterinária', label: 'Clínica Veterinária' },
+    { value: 'Clínica e PetShop', label: 'Clínica e PetShop' }
+  ];
+
   private servicePetMapping: { [key: string]: string } = {
     'Petshop': 'PETSHOP',
     'Clínica Veterinária': 'VETERINARY',
@@ -64,7 +70,7 @@ export class RegisterAnimalsComponent implements OnInit {
         race: this.toTitleCase(formValue.race),
         specie: this.toTitleCase(formValue.specie),
         responsible: this.animalForm.get('responsible')?.value,
-        servicePet: this.servicePetMapping[formValue.servicePet]
+        servicePet: formValue.servicePet
       };
       const token = localStorage.getItem('token');
       this.http
@@ -75,7 +81,7 @@ export class RegisterAnimalsComponent implements OnInit {
         .subscribe({
           next: () => {
             alert('Animal cadastrado com sucesso!');
-            this.router.navigate(['/profile-animal']);
+            this.router.navigate(['/home']);
           },
           error: (error) => {
             console.error('Erro ao cadastrar animal:', error);

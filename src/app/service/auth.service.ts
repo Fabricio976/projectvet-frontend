@@ -10,12 +10,14 @@ export class AuthService {
   private apiUrl = 'http://localhost:8080/projectvet';
   private tokenKey = 'token';
   private userName: string | null = null;
+  private userRole: string | null = null;
 
   private userNameSubject = new BehaviorSubject<string | null>(this.getUserName());
   userName$ = this.userNameSubject.asObservable();
 
   constructor(private http: HttpClient) {
     this.userName = localStorage.getItem('userName');
+    this.userRole = localStorage.getItem('userRole');
   }
 
   login(email: string, password: string): Observable<any> {
@@ -23,12 +25,15 @@ export class AuthService {
       tap((response: any) => {
         const token = response.token;
         const userName = response.userNome;
+        const userRole = response.role;
 
         if (token) {
           localStorage.setItem(this.tokenKey, token);
           localStorage.setItem('userName', userName || '');
+          localStorage.setItem('userRole', userRole || '');
           this.userName = userName;
-          this.userNameSubject.next(userName); 
+          this.userNameSubject.next(userName);
+          this.userRole = userRole;
         } else {
           console.error('Token não encontrado no response:', response);
           throw new Error('Resposta da API inválida');
@@ -45,7 +50,7 @@ export class AuthService {
     address: string;
     phone: string;
   }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register/funcionario`, userData).pipe(
+    return this.http.post(`${this.apiUrl}/register/client`, userData, { responseType: 'text' }).pipe(
       catchError((error) => {
         console.error('Erro no registro:', error);
         throw error;
@@ -56,12 +61,17 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
-
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem('userName');
+    localStorage.removeItem('userRole');
     this.userName = null;
+    this.userRole = null;
     this.userNameSubject.next(null);
+  }
+
+  getUserRole(): string | null {
+    return this.userRole || localStorage.getItem('userRole');
   }
 
   getUserName(): string | null {
