@@ -24,12 +24,6 @@ export class RegisterAnimalsComponent implements OnInit {
     { value: 'Clínica e PetShop', label: 'Clínica e PetShop' }
   ];
 
-  private servicePetMapping: { [key: string]: string } = {
-    'Petshop': 'PETSHOP',
-    'Clínica Veterinária': 'VETERINARY',
-    'Clínica e Petshop': 'PETCLINIC'
-  };
-
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
