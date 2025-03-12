@@ -5,16 +5,16 @@
   <div class="p-4">
     <ul class="nav flex-column">
       <li class="nav-item">
-        <a class="nav-link" href="#">Agenda</a>
+        <a class="nav-link" href="#" (click)="showAllAnimals(); $event.preventDefault()">Animais</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Animais</a>
+        <a class="nav-link" href="#" (click)="filterAnimals('Pet Shop'); $event.preventDefault()">Pet Shop</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Petshop</a>
+        <a class="nav-link" href="#" (click)="filterAnimals('Clínica Veterinária'); $event.preventDefault()">Clínica Veterinária</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Clínica Veterinária</a>
+        <a class="nav-link" href="#" (click)="filterAnimals('Clínica e PetShop'); $event.preventDefault()">Clínica e PetShop</a>
       </li>
     </ul>
   </div>

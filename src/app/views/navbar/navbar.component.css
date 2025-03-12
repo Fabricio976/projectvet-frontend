@@ -32,9 +32,25 @@
   justify-content: center;
 }
 
+.search-suggestions {
+  position: absolute;
+  top: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  margin-top: 5px;
+
+}
+
+.search-suggestions .list-group-item {
+  cursor: pointer;
+  padding: 8px 12px;
+}
+
 .center-search .form-control {
   max-width: 300px;
 }
+
 
 .btn-outline-success {
   color: #28a745;

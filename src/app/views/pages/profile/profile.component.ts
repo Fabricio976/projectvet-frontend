@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit {
   selectedFile: File | null = null;
   showImageOptions: boolean = false;
   previewUrl: string | null = null;
+  showResponsibleCard = false;
 
   servicePetOptions = [
     { value: 'Pet Shop', label: 'Pet Shop' },
@@ -58,6 +59,7 @@ export class ProfileComponent implements OnInit {
 
   createForm(): void {
     this.animalForm = this.fb.group({
+      rg: [''],
       name: [''],
       responsibleNome: [''],
       specie: [''],
@@ -76,11 +78,12 @@ export class ProfileComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           this.animal = response;
-          this.animal.photoUrl = response.photoUrl.startsWith('http')
-            ? response.photoUrl
-            : `http://localhost:8080${response.photoUrl}`;
+          this.animal.photoUrl = response.photoUrl && response.photoUrl.startsWith('/images')
+            ? `http://localhost:8080${response.photoUrl}`
+            : response.photoUrl || null;
           this.originalAnimal = { ...response };
           this.animalForm.patchValue({
+            rg: response.rg,
             name: response.name,
             responsibleNome: response.responsible?.nome || '',
             specie: response.specie,
@@ -100,6 +103,7 @@ export class ProfileComponent implements OnInit {
 
   startEditing(): void {
     this.isEditing = true;
+    this.showResponsibleCard = false;
   }
 
   toggleImageOptions(): void {
@@ -136,7 +140,6 @@ export class ProfileComponent implements OnInit {
       this.showImageOptions = false;
       this.cdr.detectChanges();
       this.loadAnimal(animalId!, token);
-      alert('Imagem enviada e salva com sucesso!');
     }).catch((error) => {
       console.error('Status do erro:', error.status);
       alert('Erro ao fazer upload da imagem.');
@@ -147,7 +150,6 @@ export class ProfileComponent implements OnInit {
     this.animal.photoUrl = null;
     this.previewUrl = null;
     this.showImageOptions = false;
-    alert('Imagem removida localmente!');
   }
 
   updateAnimal(updatedAnimal: any): void {
@@ -197,6 +199,7 @@ export class ProfileComponent implements OnInit {
   cancelEditing(): void {
     this.animalForm.patchValue(this.originalAnimal);
     this.isEditing = false;
+    this.showResponsibleCard = false;
   }
 
   deleteAnimal(): void {
@@ -212,12 +215,28 @@ export class ProfileComponent implements OnInit {
         .subscribe({
           next: (response: any) => {
             alert(response.message);
-            this.router.navigate(['/']);
+            this.router.navigate(['/home']);
           },
           error: (error) => {
             console.error('Erro ao excluir animal:', error);
           },
         });
+    }
+  }
+  toggleResponsibleCard(event: Event): void {
+    event.preventDefault();
+    this.showResponsibleCard = !this.showResponsibleCard;
+    event.stopPropagation();
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    if (this.showResponsibleCard) {
+      const card = document.getElementById('responsibleCard');
+      const target = event.target as HTMLElement;
+      if (card && !card.contains(target) && target.tagName !== 'A') { // Exclui o link do dono
+        this.showResponsibleCard = false;
+      }
     }
   }
 }

@@ -10,25 +10,43 @@
             alt="Foto do Animal"
             class="img-fluid rounded"
             (click)="toggleImageOptions()"
-            style="cursor: pointer;">
-          <!-- Opções de upload/remover aparecem ao clicar -->
+            style="cursor: pointer;"
+          >
           <div class="image-options" *ngIf="showImageOptions">
             <input
               type="file"
               class="d-none"
               #fileInput
               (change)="onFileSelected($event)"
-              accept="image/*">
+              accept="image/*"
+            >
             <button class="btn btn-sm btn-primary mb-1 w-100" (click)="fileInput.click()">Upload Imagem</button>
             <button
               class="btn btn-sm btn-danger w-100"
               (click)="removeImage()"
-              *ngIf="animal.photoUrl">Remover Imagem</button>
+              *ngIf="animal.photoUrl"
+            >Remover Imagem</button>
           </div>
         </div>
         <h5 class="card-title">{{ animal.name }}</h5>
-        <p class="card-text"><strong>Dono:</strong> {{ animal.responsible.nome || 'Desconhecido' }}</p>
-        <p class="card-text"><strong>Espécie:</strong> {{ animal.specie }}</p>
+        <p class="card-text">
+          <strong>Dono:</strong>
+          <a href="#" (click)="toggleResponsibleCard($event)">
+            {{ animal.responsible.nome || 'Desconhecido' }}
+          </a>
+        </p>
+        <!-- Card com informações do dono -->
+        <div class="card mt-2" *ngIf="showResponsibleCard" id="responsibleCard">
+          <div class="card-body">
+            <p><strong>Nome:</strong> {{ animal.responsible.nome || 'Desconhecido' }}</p>
+            <p><strong>Email:</strong> {{ animal.responsible.email || 'Não disponível' }}</p>
+            <p><strong>Endereço:</strong> {{ animal.responsible.address || 'Não disponível' }}</p>
+            <p><strong>CPF:</strong> {{ animal.responsible.cpf || 'Não disponível' }}</p>
+            <p><strong>Telefone:</strong> {{ animal.responsible.telefone || '1234-5678' }}</p>
+          </div>
+        </div>
+        <p class="card-text"><strong>RG:</strong> {{ animal.rg }}</p>
+        <p class="card-text"><strong>Espécie:</strong> {{ animal.specie || 'Não especificada'}}</p>
         <p class="card-text"><strong>Raça:</strong> {{ animal.race || 'Não especificada' }}</p>
         <p class="card-text"><strong>Idade:</strong> {{ animal.age || 'Não especificada' }}</p>
         <p class="card-text"><strong>Serviço:</strong> {{ animal.servicePet || 'Não especificada' }}</p>
@@ -72,7 +90,6 @@
   <div class="mt-3 d-flex justify-content-end">
     <button *ngIf="!isEditing" class="btn btn-primary me-2" (click)="startEditing()">Editar</button>
     <button *ngIf="!isEditing" class="btn btn-danger" (click)="deleteAnimal()">Excluir</button>
-
     <button *ngIf="isEditing" class="btn btn-success me-2" (click)="saveChanges()">Salvar</button>
     <button *ngIf="isEditing" class="btn btn-secondary" (click)="cancelEditing()">Cancelar</button>
   </div>

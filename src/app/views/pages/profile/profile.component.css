@@ -2,8 +2,8 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
 }
 
 .animal-image img {
@@ -14,7 +14,7 @@
 
 .image-options {
   position: absolute;
-  top: 100%; 
+  top: 100%;
   right: 0;
   background: white;
   border: 1px solid #ccc;
@@ -29,4 +29,24 @@
 
 .card-title {
   margin-right: 120px;
+}
+.card-text a {
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.card-text a:hover {
+  text-decoration: underline;
+}
+
+.card.mt-2 {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  padding: 10px;
+  max-width: 400px; 
+}
+
+.card.mt-2 p {
+  margin-bottom: 5px;
 }

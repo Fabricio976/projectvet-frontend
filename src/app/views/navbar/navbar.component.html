@@ -1,16 +1,30 @@
 <nav class="navbar custom-navbar">
-
   <div class="container-fluid">
     <div class="center-search">
-      <form class="d-flex" role="search">
+      <form class="d-flex" role="search" (submit)="onSearchSubmit($event)">
         <input
           class="form-control me-2"
           type="search"
           placeholder="Search"
           aria-label="Search"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearchInput($event)"
+          name="searchQuery"
         />
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+      <ul class="search-suggestions list-group" *ngIf="showSuggestions">
+        <li
+          *ngFor="let animal of searchResults"
+          class="list-group-item list-group-item-action"
+          (click)="selectAnimal(animal.id)"
+        >
+          {{ animal.name }} (RG: {{ animal.rg }}) - Dono: {{ animal.responsible?.nome || 'N/A' }}
+        </li>
+        <li class="list-group-item text-muted" *ngIf="searchResults.length === 0 && searchQuery">
+          Nenhum resultado encontrado
+        </li>
+      </ul>
     </div>
     <div class="dropdown">
       <button

@@ -12,7 +12,7 @@ import { AuthService } from '../../../service/auth.service';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register-animals.component.html',
-  styleUrls: ['./register-animals.component.css']
+  styleUrls: ['./register-animals.component.css'],
 })
 export class RegisterAnimalsComponent implements OnInit {
   animalForm: FormGroup;
@@ -21,7 +21,7 @@ export class RegisterAnimalsComponent implements OnInit {
   servicePetOptions = [
     { value: 'Pet Shop', label: 'Pet Shop' },
     { value: 'Clínica Veterinária', label: 'Clínica Veterinária' },
-    { value: 'Clínica e PetShop', label: 'Clínica e PetShop' }
+    { value: 'Clínica e PetShop', label: 'Clínica e PetShop' },
   ];
 
   constructor(
@@ -33,10 +33,10 @@ export class RegisterAnimalsComponent implements OnInit {
     this.animalForm = this.fb.group({
       name: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(0)]],
-      race: ['', Validators.required],
+      race: [''],
       specie: ['', Validators.required],
       responsible: ['', Validators.required],
-      servicePet: ['', Validators.required]
+      servicePet: ['', Validators.required],
     });
   }
 
@@ -51,7 +51,7 @@ export class RegisterAnimalsComponent implements OnInit {
     return str
       .toLowerCase()
       .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   }
 
@@ -64,13 +64,13 @@ export class RegisterAnimalsComponent implements OnInit {
         race: this.toTitleCase(formValue.race),
         specie: this.toTitleCase(formValue.specie),
         responsible: this.animalForm.get('responsible')?.value,
-        servicePet: formValue.servicePet
+        servicePet: formValue.servicePet,
       };
       const token = localStorage.getItem('token');
       this.http
         .post(`${this.apiUrl}/animal/register`, formData, {
           headers: { Authorization: `Bearer ${token}` },
-          responseType: 'text'
+          responseType: 'text',
         })
         .subscribe({
           next: () => {
@@ -79,11 +79,11 @@ export class RegisterAnimalsComponent implements OnInit {
           },
           error: (error) => {
             console.error('Erro ao cadastrar animal:', error);
-            alert('Falha ao cadastrar animal. Verifique os dados e tente novamente.');
-          }
+            alert(
+              'Falha ao cadastrar animal. Verifique os dados e tente novamente.'
+            );
+          },
         });
-    } else {
-      alert('Por favor, preencha todos os campos corretamente.');
     }
   }
 }

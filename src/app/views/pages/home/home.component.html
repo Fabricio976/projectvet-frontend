@@ -14,7 +14,7 @@
         <div class="card-body">
           <ul class="list-group list-group-flush">
             <li
-              *ngFor="let animal of animals"
+              *ngFor="let animal of filteredAnimals"
               class="list-group-item list-group-item-action"
               (click)="navigateToProfile(animal.id)"
               [routerLink]="['/profile-animal', animal.id]"
