@@ -1,0 +1,121 @@
+<div class="back-ground-container">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <!-- Etapa 1 -->
+    <div *ngIf="step === 1">
+      <div class="form-row">
+        <div class="grid-header">
+          <h1 class="header">Criar uma conta no Pet Vet</h1>
+          <h2 class="subheader">Insira seu nome</h2>
+        </div>
+        <div class="grid-fields">
+          <div class="field">
+            <input pInputText id="firstName" formControlName="firstName" type="text" placeholder="Primeiro Nome" />
+            <div class="error-message"
+              *ngIf="registerForm.get('firstName')?.touched && registerForm.get('firstName')?.hasError('required')">
+              Primeiro nome é obrigatório.
+            </div>
+          </div>
+          <div class="field">
+            <input pInputText id="lastName" formControlName="lastName" type="text" placeholder="Sobrenome" />
+            <div class="error-message"
+              *ngIf="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.hasError('required')">
+              Sobrenome é obrigatório.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field-buttons">
+        <p-button label="Avançar" type="button" (click)="nextStep()" [disabled]="registerForm.get('firstName')?.invalid || registerForm.get('lastName')?.invalid"></p-button>
+      </div>
+    </div>
+
+    <!-- Etapa 2 -->
+    <div *ngIf="step === 2">
+      <div class="form-row">
+        <div class="grid-header">
+          <h1 class="header">Informe seus dados para continuar</h1>
+        </div>
+        <div class="grid-fields">
+          <div class="field">
+            <input pInputText id="cpf" formControlName="cpf" type="text" placeholder="CPF" />
+            <div class="error-message"
+              *ngIf="registerForm.get('cpf')?.touched && registerForm.get('cpf')?.hasError('required')">
+              CPF é obrigatório.
+            </div>
+            <div class="error-message"
+              *ngIf="registerForm.get('cpf')?.touched && registerForm.get('cpf')?.hasError('invalidCPF')">
+              CPF inválido.
+            </div>
+          </div>
+          <div class="field">
+            <input pInputText id="address" formControlName="address" type="text" placeholder="Endereço" />
+            <div class="error-message"
+              *ngIf="registerForm.get('address')?.touched && registerForm.get('address')?.hasError('required')">
+              Endereço é obrigatório.
+            </div>
+          </div>
+          <div class="field">
+            <input pInputText id="phone" formControlName="phone" type="text" placeholder="Telefone" />
+            <div class="error-message"
+              *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.hasError('required')">
+              Telefone é obrigatório.
+            </div>
+            <div class="error-message"
+              *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.hasError('invalidPhone')">
+              Telefone inválido.
+            </div>
+          </div>
+        </div>
+      </div>
+        <div class="field-buttons">
+          <button pButton type="button" (click)="previousStep()">Voltar</button>
+          <p-button label="Avançar" type="button" (click)="nextStep()" [disabled]="registerForm.get('cpf')?.invalid || registerForm.get('address')?.invalid || registerForm.get('phone')?.invalid"></p-button>
+        </div>
+    </div>
+
+    <!-- Etapa 3 -->
+    <div *ngIf="step === 3">
+      <div class="form-row">
+        <div class="grid-header">
+          <h1 class="header">Finalize seu cadastro</h1>
+          <h2 class="subheader">Insira seu e-mail e senha</h2>
+        </div>
+        <div class="grid-fields">
+          <div class="field">
+            <input pInputText id="email" formControlName="email" type="email" placeholder="E-mail" />
+            <div class="error-message"
+              *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('required')">
+              E-mail é obrigatório.
+            </div>
+            <div class="error-message"
+              *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('email')">
+              E-mail inválido.
+            </div>
+          </div>
+          <div class="field">
+            <input pInputText id="password" formControlName="password" type="password" placeholder="Senha" />
+            <div class="error-message"
+              *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('required')">
+              Senha é obrigatória.
+            </div>
+          </div>
+          <div class="field">
+            <input pInputText id="confirmPassword" formControlName="confirmPassword" type="password" placeholder="Confirmar Senha" />
+            <div class="error-message"
+              *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.hasError('required')">
+              Confirmação de senha é obrigatória.
+            </div>
+            <div class="error-message"
+              *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.hasError('mismatch')">
+              As senhas não coincidem.
+            </div>
+          </div>
+        </div>
+      </div>
+        <div class="field-buttons">
+          <button pButton type="button" (click)="previousStep()">Voltar</button>
+          <p-button label="Finalizar" type="submit" [disabled]="registerForm.invalid"></p-button>
+        </div>
+    </div>
+  </form>
+</div>

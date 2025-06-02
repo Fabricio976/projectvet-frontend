@@ -1,0 +1,31 @@
+<div class="back-ground-container">
+
+  <!-- LOGIN -->
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <p-card
+      styleClass="form-card"
+      header="Bem Vindo ao Pets Vet!"
+      subheader="Sign in para continuar"
+    >
+    <div class="form-fields">
+        <div class="field">
+          <label for="email">Email</label>
+          <input pInputText id="email" formControlName="email" type="text" placeholder="name@example.com" />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <p-password id="password" formControlName="password" placeholder="password" [feedback]="false" [toggleMask]="true" [fluid]="true">
+          </p-password>
+        </div>
+        <div class="form-options">
+          <div class="checkbox-group">
+             <span class="forgot-password" (click)="navigateToRegister()">Criar conta</span>
+          </div>
+          <span class="forgot-password" (click)="navigateToForgotPassword()">Esqueceu sua senha?</span>
+        </div>
+        <p-button label="Sign In" type="submit" [disabled]="!loginForm.invalid" ></p-button>
+      </div>
+    </p-card>
+  </form>
+
+</div>

@@ -1,0 +1,32 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 250px;
+  background-color: #212529;
+  color: #fff;
+  z-index: 1000;
+}
+
+
+.sidebar .logo {
+  padding: 20px 20px 10px 20px;
+  text-align: center;
+  border-bottom: 1px solid #ced4da;
+}
+
+.sidebar .logo h4 {
+  margin: 0;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Nav links */
+.nav-link {
+  color: #ced4da;
+}
+
+.nav-link:hover {
+  color: #fff;
+}

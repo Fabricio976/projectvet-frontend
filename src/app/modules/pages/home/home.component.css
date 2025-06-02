@@ -1,0 +1,16 @@
+.list-group-item {
+  cursor: pointer;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+.d-flex {
+  width: 100%;
+}
+
+.d-flex span {
+  flex: 1;
+  text-align: center;
+}
