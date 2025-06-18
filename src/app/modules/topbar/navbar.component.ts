@@ -1,11 +1,11 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
-import { AuthService } from '../../service/auth.service';
-import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',

@@ -1,12 +1,11 @@
-import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
-import { AuthService } from '../../../service/auth.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-animal-profile',

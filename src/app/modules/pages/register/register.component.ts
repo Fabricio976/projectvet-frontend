@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
-import { AuthService } from '../../../service/auth.service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { CustomValidators } from '../../../models/interfaces/validator/custaom-validator';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -74,10 +73,6 @@ nextStep(): void {
     if (this.step > 1) {
       this.step--;
     }
-  }
-
-  navigateToLogin() {
-    this.router.navigate(['/login']);
   }
 
   ngOnInit(): void { }

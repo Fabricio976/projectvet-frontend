@@ -1,18 +1,17 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { AnimalFilterService } from '../../../service/animal.filter.service';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { AnimalFilterService } from '../../../services/animal.filter.service';
 
-import { AuthService } from '../../../service/auth.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
   animals: any[] = [];

@@ -114,7 +114,7 @@
       </div>
         <div class="field-buttons">
           <button pButton type="button" (click)="previousStep()">Voltar</button>
-          <p-button label="Finalizar" type="submit" [disabled]="registerForm.invalid"></p-button>
+          <p-button label="Finalizar" [disabled]="registerForm.invalid" (click)="onSubmit()"></p-button>
         </div>
     </div>
   </form>

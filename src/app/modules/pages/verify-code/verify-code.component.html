@@ -1,54 +1,54 @@
-<main class="form-signin w-100 m-auto">
-  <form [formGroup]="verifyForm" (ngSubmit)="onSubmit()">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="60"
-      height="60"
-      fill="currentColor"
-      class="bi bi-upc-scan"
-      viewBox="0 0 16 16"
-    >
-      <path
-        d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5M3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0z"
-      />
-    </svg>
-    <h1 class="h3 mb-3 fw-normal">Verificar Código</h1>
-
-    <div class="form-floating">
-      <input
-        type="text"
-        class="form-control"
-        id="floatingCode"
-        placeholder="Código"
-        formControlName="code"
-        [ngClass]="{
-          'is-invalid':
-            verifyForm.get('code')?.touched && verifyForm.get('code')?.invalid
-        }"
-      />
-      <label for="floatingCode">Código enviado ao email</label>
-      <div
-        class="invalid-feedback"
-        *ngIf="
-          verifyForm.get('code')?.touched &&
-          verifyForm.get('code')?.hasError('required')
-        "
-      >
-        Código é obrigatório.
+<div class="back-ground-container">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <!--Verifica Código -->
+    <div *ngIf="step === 1">
+      <div class="form-row">
+        <div class="grid-header">
+          <h1 class="header">Verificação do Código</h1>
+          <h2 class="subheader">Insira o código enviado ao seu email</h2>
+        </div>
+        <div class="grid-fields">
+          <div class="field">
+            <input pInputText id="code" formControlName="code" type="text" placeholder="Código" />
+            <div class="error-message" *ngIf="formGroup.get('code')?.touched && formGroup.get('code')?.hasError('required')">
+              Código é obrigatório.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field-buttons">
+        <p-button label="Verificar" type="button" (click)="verifyCode()" [disabled]="formGroup.get('code')?.invalid"></p-button>
       </div>
     </div>
 
-    <div class="text-start my-3">
-      <a href="/forgot-password" class="text-primary">Não recebi o email</a>
+    <!--Redefini Senha -->
+    <div *ngIf="step === 2">
+      <div class="form-row">
+        <div class="grid-header">
+          <h1 class="header">Nova Senha</h1>
+        </div>
+        <div class="grid-fields">
+          <div class="field" m-t10>
+            <input pInputText id="newPassword" formControlName="newPassword" type="password" placeholder="Nova Senha" />
+            <div class="error-message" *ngIf="formSubmitted && formGroup.get('newPassword')?.hasError('required')">
+              Senha é obrigatória.
+            </div>
+          </div>
+          <div class="field">
+            <input pInputText id="confirmPassword" formControlName="confirmPassword" type="password" placeholder="Confirmar Senha" />
+            <div class="error-message" *ngIf="formSubmitted && formGroup.get('confirmPassword')?.hasError('required')">
+              Confirmação de senha é obrigatória.
+            </div>
+            <div class="error-message" *ngIf="formSubmitted && formGroup.hasError('mismatch')">
+              As senhas não coincidem.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field-buttons">
+        <button pButton type="button" (click)="step = 1">Voltar</button>
+        <p-button label="Confirmar" type="submit" [disabled]="formGroup.invalid"></p-button>
+      </div>
     </div>
-
-    <button
-      class="btn btn-primary w-100 py-2"
-      type="submit"
-      [disabled]="verifyForm.invalid"
-    >
-      Verificar
-    </button>
-    <p class="mt-5 mb-3 text-body-secondary">Projeto Vet – 2025</p>
   </form>
-</main>
+</div>

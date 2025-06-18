@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
-import { AuthService } from '../../../service/auth.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-register-animal',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register-animals.component.html',
-  styleUrls: ['./register-animals.component.css'],
+  styleUrls: ['./register-animals.component.scss'],
 })
 export class RegisterAnimalsComponent implements OnInit {
   animalForm: FormGroup;

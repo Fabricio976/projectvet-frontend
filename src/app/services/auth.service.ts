@@ -5,7 +5,6 @@ import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environment/environment';
 import { SignupUserResquest } from '../models/interfaces/user/signupUser-request';
 import { SigninUserResquest } from '../models/interfaces/user/signinUser-request';
-import { CookieService } from 'ngx-cookie-service'
 
 
 @Injectable({
@@ -14,28 +13,24 @@ import { CookieService } from 'ngx-cookie-service'
 export class AuthService {
   private API_URL = environment.API_URL;
   private tokenKey = environment.tokenKey;
-
   private userName: string | null = null;
   private userRole: string | null = null;
 
   private userNameSubject = new BehaviorSubject<string | null>(this.getUserName());
   userName$ = this.userNameSubject.asObservable();
 
-  constructor(
-    private http: HttpClient,
-    private cookieService: CookieService
-  ) {
+  constructor(private http: HttpClient) {
     this.userName = localStorage.getItem('userName');
     this.userRole = localStorage.getItem('userRole');
   }
 
 
   getToken(): string | null {
-    return this.cookieService.get(this.tokenKey);
+    return localStorage.getItem(this.tokenKey);
   }
 
   logout(): void {
-    this.cookieService.delete(this.tokenKey);
+    localStorage.removeItem(this.tokenKey);
     localStorage.removeItem('userName');
     localStorage.removeItem('userRole');
     this.userName = null;
@@ -52,7 +47,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    const token = this.cookieService.get(this.tokenKey);
+    const token = localStorage.getItem(this.tokenKey);
     return !!token;
   }
 
@@ -67,14 +62,14 @@ export class AuthService {
   }
 
   login(authData : SigninUserResquest): Observable<any> {
-    return this.http.post(`${this.API_URL}/login`, { authData }).pipe(
+    return this.http.post(`${this.API_URL}/login`, authData).pipe(
       tap((response: any) => {
         const token = response?.token;
         const userName = response.userNome;
         const userRole = response.role;
 
         if (token) {
-          this.cookieService.set(this.tokenKey, token);
+          localStorage.setItem(this.tokenKey, token);
           localStorage.setItem('userName', userName || '');
           localStorage.setItem('userRole', userRole || '');
           this.userName = userName;
