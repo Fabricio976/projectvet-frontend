@@ -8,6 +8,7 @@ Integração com a API segura (JWT)
 Fluxo completo de autenticação, cadastro e recuperação de senha
 
 ⚙️ Tecnologias Utilizadas
+
 🔷 Angular (Admin/Dashboard)
 Angular 17+
 Angular Router
